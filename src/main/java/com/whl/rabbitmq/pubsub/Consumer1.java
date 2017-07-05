@@ -8,7 +8,7 @@ import com.whl.rabbitmq.util.ConnectionUtil;
 /**
  * 
  * description: 消息消费者，由服务器异步push到消费者 pub/sub模式测试
- * 
+ * 此模式类似于子网广播，所有订阅了交换机的队列都能拿到消息
  * @author whling
  * @date 2017年7月4日 下午3:16:56
  *

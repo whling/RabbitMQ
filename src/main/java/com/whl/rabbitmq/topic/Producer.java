@@ -5,7 +5,7 @@ import com.rabbitmq.client.Connection;
 import com.whl.rabbitmq.util.ConnectionUtil;
 /**
  * 
- * description: 消息路由测试topic
+ * description: 消息路由测试topic(topic支持routing key通配符模式(#:匹配多个，*:匹配一个))
  * @author whling
  * @date 2017年7月4日 下午7:22:00
  *

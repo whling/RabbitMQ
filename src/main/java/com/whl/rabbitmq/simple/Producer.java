@@ -4,6 +4,13 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.whl.rabbitmq.util.ConnectionUtil;
 
+/**
+ * 
+ * description: 消息的生产者
+ * @author whling
+ * @date 2017年7月5日 上午10:50:09
+ *
+ */
 public class Producer {
 	private final static String QUEUE_NAME = "test_queue";
 

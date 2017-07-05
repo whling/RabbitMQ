@@ -26,7 +26,7 @@ public class Consumer {
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 		// 定义队列的消费者
 		QueueingConsumer consumer = new QueueingConsumer(channel);
-		// 监听队列，TRUE为自动模式，即消费者获取消息，队列就认为消息被消费
+		// 监听队列，true为自动模式，即消费者获取消息，队列就认为消息被消费
 		channel.basicConsume(QUEUE_NAME, true, consumer);
 
 		// 获取消息

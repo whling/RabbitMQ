@@ -8,7 +8,7 @@ import com.whl.rabbitmq.util.ConnectionUtil;
 /**
  * 
  * description: 消息消费者，由服务器异步push到消费者
- * 	work模式测试
+ * 	work模式测试，如果没有指定basicQos，则在此情况下是每个消费者消费消息是均衡的
  * 
  * @author whling
  * @date 2017年7月4日 下午3:16:56
