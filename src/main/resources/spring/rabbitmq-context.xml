@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+
+	<context:property-placeholder location="classpath:rabbitmq.properties" />
+	<!-- 定义RabbitMQ的连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${rabbitmq.host}" port="${rabbitmq.port}" username="${rabbitmq.username}"
+		password="${rabbitmq.password}" virtual-host="${rabbitmq.vhost}" />
+
+	<!-- 定义Rabbit模板，指定连接工厂以及定义exchange -->
+	<!-- <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
+		exchange="fanoutExchange" /> -->
+	<!-- exchange和routing-key这些放在convertAndSend指定也行 -->
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" 
+		exchange="topicExchange" routing-key="foo.bar" />
+
+	<!-- MQ的管理，包括队列、交换器等 -->
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<!-- 定义队列，自动声明 -->
+	<rabbit:queue name="myQueue" auto-declare="true" durable="true" />
+	<rabbit:queue name="myQueue1" auto-declare="true" durable="true" />
+
+	<!-- 定义交换器，自动声明 -->
+	<!-- <rabbit:fanout-exchange name="fanoutExchange"
+		auto-declare="true">
+		<rabbit:bindings>
+			<rabbit:binding queue="myQueue" />
+			<rabbit:binding queue="myQueue1" />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange> -->
+
+	<rabbit:topic-exchange name="topicExchange">
+	<rabbit:bindings>
+		<rabbit:binding queue="myQueue" pattern="foo.*" />
+		<rabbit:binding queue="myQueue1"  pattern="foo.#" />
+	</rabbit:bindings>
+</rabbit:topic-exchange>
+
+	<!-- 队列监听 -->
+	<rabbit:listener-container
+		connection-factory="connectionFactory">
+		<rabbit:listener ref="foo" method="listen"
+			queue-names="myQueue" />
+		<rabbit:listener ref="foo2" method="listen"
+			queue-names="myQueue1" />
+	</rabbit:listener-container>
+
+	<bean id="foo" class="com.whl.rabbitmq.spring.Foo" />
+	<bean id="foo2" class="com.whl.rabbitmq.spring.Foo2" />
+
+</beans>
