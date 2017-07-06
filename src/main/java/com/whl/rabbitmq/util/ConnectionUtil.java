@@ -6,11 +6,13 @@ import com.rabbitmq.client.ConnectionFactory;
 /**
  * 
  * description: 连接RabbitMQ的工具类
+ * 
  * @author whling
  * @date 2017年7月5日 上午10:49:39
  *
  */
 public class ConnectionUtil {
+	
 
 	public static Connection getConnection() throws Exception {
 		ConnectionFactory factory = new ConnectionFactory();

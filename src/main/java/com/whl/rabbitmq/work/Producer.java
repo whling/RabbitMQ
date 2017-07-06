@@ -2,6 +2,7 @@ package com.whl.rabbitmq.work;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.MessageProperties;
 import com.whl.rabbitmq.util.ConnectionUtil;
 
 /**
@@ -20,12 +21,12 @@ public class Producer {
         Channel channel = connection.createChannel();
 
         // 声明队列
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.queueDeclare(QUEUE_NAME, true, false, false, null);
 
         for (int i = 0; i < 50; i++) {
             // 消息内容
             String message = "" + i;
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
 
 //            Thread.sleep(i * 10);
