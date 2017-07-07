@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+     host: hadoop01
+     port: 5672
+     username: whling
+     password: whling
+     virtual-host: /whling
